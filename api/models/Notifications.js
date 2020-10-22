@@ -1,6 +1,6 @@
 module.exports = {
   attributes: {
-    titile: {
+    title: {
       type: 'string',
       required: true
     },
@@ -10,7 +10,7 @@ module.exports = {
     },
     read: {
       type: 'boolean',
-      defaultsTo: true
+      defaultsTo: false
     },
   }
 };

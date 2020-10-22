@@ -9,6 +9,7 @@
  */
 
 module.exports.routes = {
-
+  '/say/hello': 'SayController.hello',
+  'PUT /notifications/:id ': 'NotificationsController.edit'
 
 };
