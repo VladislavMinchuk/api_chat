@@ -12,7 +12,6 @@ module.exports = {
     return bcrypt.compareSync(firstPassword, secondPassword);
   },
   createToken (user) {
-    console.log(sails.config.custom.jwt);
     return jwt.sign(
       {
         id: user.id
@@ -26,11 +25,18 @@ module.exports = {
       }
     );
   },
-  jwtStrategy(req, jwt_payload, next) {
-    console.log(req, jwt_payload, ' jwtStrategy');
-    let user = jwt_payload.id;
-    // do your things with user like recording usage of api
-    return next(null, user, {});
+  async jwtStrategy(req, jwt_payload, done) {
+    try {
+      const user = await Users.findOne({ id: jwt_payload.id });
+  
+      if (!user) {
+        return done(null, false);
+      }
+  
+      return done(null, user);
+    } catch (err) {
+      return done(err, false);
+    }
   }
 }
 

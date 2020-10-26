@@ -1,15 +1,16 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const { ExtractJwt } = require('passport-jwt');
 const AuthService = require('../api/services/AuthService');
 const PassportService = require('../api/services/PassportService');
+const { custom: { jwt } } = require('./custom');
 
-let EXPIRES_IN_MINUTES = process.env.JWT_EXPIRE_IN_MINUTE || 60 * 24;
-let SECRET = process.env.JWT_SECRET || 'mysecret';
-let ALGORITHM = process.env.JWT_ALGORITHM || 'HS256';
-let ISSUER = process.env.JWT_ISSUER || 'http://localhost:1337';
-let AUDIENCE = process.env.JWT_AUDIENCE || 'http://localhost:1337';
+const EXPIRES_IN_MINUTES = jwt.expiresIn;
+const SECRET = jwt.secretKey;
+const ALGORITHM = jwt.algorithm;
+const ISSUER = jwt.issuer;
+const AUDIENCE = jwt.audience;
 
 const LOCAL_STRATEGY_CONFIG = {
   usernameField: 'email',
@@ -20,9 +21,9 @@ const LOCAL_STRATEGY_CONFIG = {
 const JWT_STRATEGY_CONFIG = {
   expiresInMinutes: EXPIRES_IN_MINUTES,
   secretOrKey: SECRET,
-  // issuer: ISSUER,
-  // algorithm: ALGORITHM,
-  // audience: AUDIENCE,
+  issuer: ISSUER,
+  algorithm: ALGORITHM,
+  audience: AUDIENCE,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   passReqToCallback: true
 };
