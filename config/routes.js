@@ -9,7 +9,7 @@
  */
 
 module.exports.routes = {
-  'POST /auth/login': 'AuthController.login',
-  'POST /auth/register': 'AuthController.register'
+  'POST /auth/login': 'auth/login',
+  'POST /auth/register': 'auth/register'
 
 };
